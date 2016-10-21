@@ -9,8 +9,13 @@ Template.postSubmit.events({
 
     Meteor.call('postInsert', post, function(error, result) {
       // affiche l'erreur à l'utilisateur et s'interrompt
-      if (error)
-      return alert(error.reason);
+      if (error){
+        return alert(error.reason);
+      }
+      // affiche ce résultat mais route tout de même
+      if (result.postExists){
+        alert('Ce lien a déjà été utilisé');
+      }
       Router.go('postPage', {_id: result._id});
     });
   }
